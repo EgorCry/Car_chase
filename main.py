@@ -7,6 +7,11 @@ from pygame.locals import *
 # Initialize the program
 pygame.init()
 
+# Initialize and start background music
+pygame.mixer.init()
+pygame.mixer.music.load('Sounds/background.wav')
+pygame.mixer.music.play(-1, 0, 0)
+
 # Set FPS
 FPS = 60
 FramePerSec = pygame.time.Clock()
@@ -50,7 +55,7 @@ class Rival(pygame.sprite.Sprite):
     def move(self):
         global SCORE
         self.rect.move_ip(0, SPEED)
-        if self.rect.bottom > 600:
+        if self.rect.bottom > 650:
             SCORE += 1
             self.rect.top = 0
             self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
@@ -111,7 +116,7 @@ while True:
 
     # Moves and Re-draw all Sprites
     for entity in all_sprites:
-        DISPLAYSURF.blit(entity.image,entity.rect)
+        DISPLAYSURF.blit(entity.image, entity.rect)
         entity.move()
 
     # To be run if collusion occurs between Player and Rival
