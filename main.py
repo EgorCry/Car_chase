@@ -7,7 +7,7 @@ from pygame.locals import *
 # Initialize the program
 pygame.init()
 
-# Initialize and start background music
+# Initialize and start a background music
 pygame.mixer.init()
 pygame.mixer.music.load('Sounds/background.wav')
 pygame.mixer.music.play(-1, 0, 0)
