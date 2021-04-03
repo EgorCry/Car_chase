@@ -6,4 +6,5 @@
 
 ## This is how it looks for now![image](https://user-images.githubusercontent.com/68854878/112764719-9cd5cb00-9012-11eb-8213-57dee021f3ab.png)
 
-## I've been added background music and now I'm gonna add menu and correct rivals paths
+## I've been added background music and now I'm going to add a menu and correct rivals paths
+## Do not forget: add a timer, game image

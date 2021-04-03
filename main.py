@@ -23,6 +23,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+YELLOW = (255, 255, 0)
 
 
 # Screen variables
@@ -57,8 +58,6 @@ class Background():
         self.movingSpeed = 5
 
     def update(self):
-        print('y1', self.bgY1)
-        print('Y2', self.bgY2)
         self.bgY1 += self.movingSpeed
         self.bgY2 += self.movingSpeed
         if self.bgY1 >= self.rectBGimg.height:
@@ -144,13 +143,15 @@ while True:
     back_ground.update()
     back_ground.render()
 
-    scores = font_small.render(str(SCORE), True, BLACK)
-    DISPLAYSURF.blit(scores, (10, 10))
-
     # Moves and Re-draw all Sprites
     for entity in all_sprites:
         DISPLAYSURF.blit(entity.image, entity.rect)
         entity.move()
+
+    DISPLAYSURF.blit(pygame.image.load('Sprites/Scores.png'), (0, 0))
+
+    scores = font_small.render('Score: '+str(SCORE), True, YELLOW)
+    DISPLAYSURF.blit(scores, (10, 11))
 
     # To be run if collusion occurs between Player and Rival
     if pygame.sprite.spritecollideany(P1, enemies):
