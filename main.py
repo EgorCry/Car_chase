@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import time
+import os
 from pygame.locals import *
 
 # Initialize the program
@@ -36,13 +37,38 @@ font = pygame.font.SysFont('Verdana', 60)
 font_small = pygame.font.SysFont('Verdana', 20)
 game_over = font.render('Game Over', True, BLACK)
 
-background = pygame.image.load('Sprites/AnimatedStreet.png')
-
-
 # Setup 400x600 pixels display with caption and white screen
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption('Car chase')
+
+
+class Background():
+    def __init__(self):
+        self.bgimage = pygame.image.load('Sprites/AnimatedStreet.png')
+        self.rectBGimg = self.bgimage.get_rect()
+
+        self.bgY1 = 0
+        self.bgX1 = 0
+
+        self.bgY2 = self.rectBGimg.height
+        self.bgX2 = 0
+
+        self.movingSpeed = 5
+
+    def update(self):
+        print('y1', self.bgY1)
+        print('Y2', self.bgY2)
+        self.bgY1 += self.movingSpeed
+        self.bgY2 += self.movingSpeed
+        if self.bgY1 >= self.rectBGimg.height:
+            self.bgY1 = -self.rectBGimg.height
+        if self.bgY2 >= self.rectBGimg.height:
+            self.bgY2 = -self.rectBGimg.height
+
+    def render(self):
+        DISPLAYSURF.blit(self.bgimage, (self.bgX1, self.bgY1))
+        DISPLAYSURF.blit(self.bgimage, (self.bgX2, self.bgY2))
 
 
 class Rival(pygame.sprite.Sprite):
@@ -87,6 +113,10 @@ P1 = Player()
 E1 = Rival()
 
 
+# Set up background
+back_ground = Background()
+
+
 # Set up sprites groups
 enemies = pygame.sprite.Group()
 enemies.add(E1)
@@ -106,11 +136,14 @@ while True:
     for event in pygame.event.get():
         if event.type == INC_SPEED:
             SPEED += 0.5
+            back_ground.movingSpeed += 0.5
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    DISPLAYSURF.blit(background, (0, 0))
+    back_ground.update()
+    back_ground.render()
+
     scores = font_small.render(str(SCORE), True, BLACK)
     DISPLAYSURF.blit(scores, (10, 10))
 
